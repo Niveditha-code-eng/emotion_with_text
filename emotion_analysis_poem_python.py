@@ -5,7 +5,7 @@ root = tk.Tk()
 root.title("ANALYSISING EMOTION OF THE POEM")
 root.geometry("500x500")
 
-label = tk.Label(root, text = "emotion analysis of poem", font = ("Arial",15))
+label = tk.Label(root, text = "emotion analysis of poem and get the number of words", font = ("Arial",15))
 label.pack(pady = 10)
 
 text_box = tk.Text(root, height = 5)
@@ -26,12 +26,32 @@ def analyze_poem():
         result = "This poem carries a calm and neutral tone."
         root.config(bg= "lightgray")
     
-    output_label.config(text = f"Polarity: {sentiment.polarity:.2f}\n{result}")
+    output_label.config(
+        text = f"Polarity: {sentiment.polarity:.2f}\n"
+               f"Subjectivity: {sentiment.subjectivity:.2f}\n"
+               f"{result}")
 
 analyze_button = tk.Button(root, text="Analyze", command=analyze_poem)
 analyze_button.pack(pady=10)
 
 output_label = tk.Label(root, text="", font=("Arial", 12))
 output_label.pack(pady=10)
+
+result_label = tk.Label(root, text="Words: 0", font= ("Arial",15))
+result_label.pack(pady = 25)
+
+def number_of_words():
+    words = text_box.get("1.0",tk.END).strip()
+    count = 0
+    if not words:
+        count = 0
+    else:
+        word = words.split()
+        count += len(word)
+
+    result_label.config(text = f"words: {count}")
+
+button = tk.Button(root, text = "words", font = ("Arial",15), command = number_of_words)
+button.pack(padx =30, pady = 30)
 
 root.mainloop()
